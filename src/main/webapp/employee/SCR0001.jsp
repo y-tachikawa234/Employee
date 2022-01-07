@@ -1,30 +1,30 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@include file="../header.html"%>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/CSS/SCR0001.css">
 
-<center>
-<h1>社員管理システム</h1>
+<div class="all">
+	<h1>社員管理システム</h1>
 
-<%--
-<%@page errorPage="SCR0001.jsp" %>
-<p>社員IDには数値を入力してください。</p>
- --%>
+	<div class="error">
+		<p>
+			${errormessage.checkNullOfId }<br>
+			${errormessage.checkFormatOfId } ${errormessage.checkDigitOfId }
+			${errormessage.checkNullOfEmployeedata }
+		</p>
+	</div>
 
-<p>
-	${errormessage.checkNullOfId }<br>
-	${errormessage.checkFormatOfId }
-	${errormessage.checkDigitOfId }
-</p>
+		<form action="SCR0002.jsp" method="get">
+				<input type="submit" value="社員登録" class="botun"><br>
+		</form>
 
-<form action="SCR0002.jsp" method="get">
-<p><input type="submit" value="社員登録"></p>
-<br>
-</form>
+	<div class="search">
+		<form action="Search.action" method="post">
+				社員ID<br>
+				<input type="text" name="employee_id" class="box" ><br>
+				<input type="submit" value="社員照会・更新" class="botun">
+		</form>
+	</div>
+</div>
 
-<form action="search" method="post">
-<p>社員ID<br><input type="text" name="employee_id"></p>
-
-<p><input type="submit" value="社員照会・更新"></p>
-</form>
-
-<%@include file="../footer.html" %>
-</center>
+<%@include file="../footer.html"%>

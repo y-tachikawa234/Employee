@@ -9,6 +9,7 @@ public class ErrorMessage implements java.io.Serializable{
 	private String checkDigitOfBirthday;
 	private String checkDigitOfBase_salary;
 	private String checkDigitOfId;
+	private String checkNullOfEmployeedata;
 	
 	
 	public String getCheckNullOfId() {
@@ -39,6 +40,10 @@ public class ErrorMessage implements java.io.Serializable{
 		return checkDigitOfId;
 	}
 	
+	public String getCheckNullOfEmployeedata() {
+		return checkNullOfEmployeedata;
+	}
+	
 
 	public void setCheckNullOfId(String checkNullOfId) {
 		this.checkNullOfId=checkNullOfId;
@@ -66,6 +71,10 @@ public class ErrorMessage implements java.io.Serializable{
 	
 	public void setCheckDigitOfId(String checkDigitOfId) {
 		this.checkDigitOfId=checkDigitOfId;
+	}
+	
+	public void setCheckNullOfEmployeedata(String checkNullOfEmployeedata) {
+		this.checkNullOfEmployeedata=checkNullOfEmployeedata;
 	}
 
 }

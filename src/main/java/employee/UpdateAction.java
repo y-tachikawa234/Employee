@@ -1,29 +1,22 @@
 package employee;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.EmployeeData;
 import bean.ErrorMessage;
 import dao.EmployeeDAO;
+import tool.Action;
 
-@WebServlet(urlPatterns = { "/employee/update" })
-public class Update extends HttpServlet {
+public class UpdateAction extends Action {
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response){
+	public String execute(HttpServletRequest request, HttpServletResponse response){
 		ErrorMessage errormessage = new ErrorMessage();
 		try {
-			response.setContentType("text/html; charset=UTF-8");
-			request.setCharacterEncoding("UTF-8");
 			
 			Integer employee_id = Integer.parseInt(request.getParameter("employee_id"));
 			String affiliation_cd = request.getParameter("affiliation_cd");
@@ -40,38 +33,34 @@ public class Update extends HttpServlet {
 			if (String.valueOf(employee_id).length() != 8) {// 社員IDの桁数チェック。catch文でnullとフォーマットのチェック。
 				errormessage.setCheckDigitOfId("社員IDは数字8桁で入力してください。");
 				request.setAttribute("errormessage", errormessage);
-				request.getRequestDispatcher("SCR0003.jsp").forward(request, response);
-				return;
+				return "SCR0003.jsp";
 			}
 
 			if (employee_nm == null || employee_nm.isEmpty()) {// 氏名入力チェック。nullとemptyのチェック。
 				errormessage.setCheckNullOfName("氏名は必須です。");
 				request.setAttribute("errormessage", errormessage);
-				request.getRequestDispatcher("SCR0003.jsp").forward(request, response);
-				return;
+				return "SCR0003.jsp";	
 			}
 
 			if (birthday == null || birthday.isEmpty()) {// 誕生日入力チェック。nullとemptyのチェック。
 				errormessage.setCheckNullOfBirthday("生年月日は必須です。");
 				request.setAttribute("errormessage", errormessage);
-				request.getRequestDispatcher("SCR0003.jsp").forward(request, response);
-				return;
+				return "SCR0003.jsp";
+				
 			} else if (birthday.length() == 10) {// 有効な日付かチェック。
-				DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+				SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 				df.setLenient(false);
 				df.format(df.parse(birthday));
 			} else if (birthday.length() != 10) {// 桁数のチェック。
 				errormessage.setCheckDigitOfBirthday("生年月日はyyyy/mm/ddの形式で入力してください。");
 				request.setAttribute("errormessage", errormessage);
-				request.getRequestDispatcher("SCR0003.jsp").forward(request, response);
-				return;
+				return "SCR0003.jsp";
 			}
 
 			if (String.valueOf(base_salary).length() != 6) {
-				errormessage.setCheckDigitOfBase_salary("基本給料は***.**の形式で入力してください。");
+				errormessage.setCheckDigitOfBase_salary("基本給料は***.**(千円)の形式で入力してください。");
 				request.setAttribute("errormessage", errormessage);
-				request.getRequestDispatcher("SCR0003.jsp").forward(request, response);
-				return;
+				return "SCR0003.jsp";
 			}
 
 			EmployeeData ed = new EmployeeData(); 
@@ -91,28 +80,21 @@ public class Update extends HttpServlet {
 			int line = dao.update(ed);
 
 			if (line > 0) {
-				request.getRequestDispatcher("SCR0004.jsp").forward(request, response);
+				return "SCR0004.jsp";
 			}
 			
 		}catch (NumberFormatException e) {
 			errormessage.setCheckNullOfId("社員ID・氏名・生年月日・基本給料は必須です。");
 			errormessage.setCheckFormatOfId("社員ID・基本給料は数字で入力してください。");
 			request.setAttribute("errormessage", errormessage);
-			try {
-				request.getRequestDispatcher("SCR0003.jsp").forward(request, response);
-			} catch (ServletException | IOException e1) {
-				e1.printStackTrace();
-			}
+			return "SCR0003.jsp";
 		} catch (ParseException p) {
 			errormessage.setCheckDigitOfBirthday("存在する日付で入力してください。");
 			request.setAttribute("errormessage", errormessage);
-			try {
-				request.getRequestDispatcher("SCR0003.jsp").forward(request, response);
-			} catch (ServletException | IOException e) {
-				e.printStackTrace();
-			}
+			return "SCR0003.jsp";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	    return "SCR0003.jsp";
 	}
 }

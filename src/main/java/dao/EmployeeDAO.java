@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 import bean.EmployeeData;
 
 public class EmployeeDAO extends ConnectionDAO {
@@ -40,7 +38,7 @@ public class EmployeeDAO extends ConnectionDAO {
 				employeedata.setBase_salary(rs.getBigDecimal("base_salary"));
 				employeedata.setMemo(rs.getString("memo"));
 				employeedata.setDelete_flag(rs.getString("delete_flag"));
-			}
+			}					
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -92,10 +90,6 @@ public class EmployeeDAO extends ConnectionDAO {
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch(SQLServerException e) {
-			errormessage.setCheckNullOfId("社員ID・氏名・生年月日・基本給料は必須です。");
-			errormessage.setCheckFormatOfId("社員ID・基本給料は数字で入力してください。");
-			request.setAttribute("errormessage", errormessage);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

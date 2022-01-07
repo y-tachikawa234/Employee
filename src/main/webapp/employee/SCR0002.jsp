@@ -1,9 +1,12 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@include file="../header.html"%>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/CSS/SCR0002.css">
 
-<center>
+<div class="all">
 	<h1>新規社員登録</h1>
-
+	
+	<div class="error">
 	<p>
 	${errormessage.checkNullOfId }<br>
 	${errormessage.checkFormatOfId }
@@ -11,72 +14,82 @@
 	${errormessage.checkNullOfName }
 	${errormessage.checkDigitOfBirthday }
 	${errormessage.checkDigitOfBase_salary}
+	${errormessage.checkNullOfEmployeedata }
 	</p>
+	</div>
 
-	<form action="insert" method="post">
-		<table style="border-collapse: separate; border-spacing: 10px;">
+
+
+	<form action="Insert.action" method="post">
+	<div class="table">
+		<table>
 			<tr>
 				<th>社員ID</th>
-				<td><input type="text" name="employee_id"></td>
+				<td><input type="text" name="employee_id" class="box"></td>
 			</tr>
 
 			<tr>
 				<th>所属部署</th>
-				<td><select name="affiliation_cd">
+				<td><select name="affiliation_cd" class="box">
 						<option value="00">人事部</option>
 						<option value="01">総務部</option>
 						<option value="02">開発本部</option>
-				</select></td>
+					</select>
+				</td>
 			</tr>
 
 			<tr>
 				<th>役職</th>
-				<td><select name="position_cd">
+				<td><select name="position_cd" class="box">
 						<option value="00">初級職</option>
 						<option value="01">中級職</option>
 						<option value="02">部長</option>
-				</select></td>
+					</select>
+				</td>
 			</tr>
 
 			<tr>
 				<th>氏名</th>
-				<td><input type="text" name="employee_nm"></td>
+				<td><input type="text" name="employee_nm" class="box"></td>
 			</tr>
 
 			<tr>
 				<th>性別</th>
-				<td><input type="radio" name="gender" value="1" checked>男性
-					<input type="radio" name="gender" value="2">女性
-					<input type="checkbox" name="foreign_nationality" value="1">外国籍</td>
+				<td><input type="radio" name="gender" value="1"  checked>男性
+					<input type="radio" name="gender" value="2" >女性
+					<input type="checkbox" name="foreign_nationality" value="1" >外国籍
+				</td>
 			</tr>
 
 			<tr>
 				<th>生年月日</th>
-				<td><input type="text" name="birthday"></td>
+				<td><input type="text" name="birthday" class="box"></td>
 
 			</tr>
 
 			<tr>
 				<th>基本給料</th>
-				<td><input type="text" name="base_salary"></td>
+				<td><input type="text" name="base_salary" class="box"></td>
 			</tr>
 
 			<tr>
 				<th>メモ</th>
-				<td><textarea name="memo" cols="23" rows="3"></textarea></td>
+				<td><textarea name="memo" class="box"></textarea></td>
 			</tr>
 		</table>
-
-		<p>
-			<input type="submit" value="新規登録">
-		</p>
-	</form>
-
-	<form action="SCR0001.jsp" method="post">
-		<p>
-			<input type="submit" value="戻る">
-		</p>
-	</form>
-</center>
-
+	</div>	
+	
+	<div class="center">
+				<div class="insert">
+				<input type="submit" value="新規登録" class="botun">
+				</div>
+		</form>
+		
+		<div class="return">	
+		<form action="SCR0001.jsp" method="post">
+				<input type="submit" value="戻る" class="botun">
+		</form>
+		</div>
+	</div>
+</div>
 <%@include file="../footer.html"%>
