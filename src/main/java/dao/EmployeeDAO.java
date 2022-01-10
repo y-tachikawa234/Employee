@@ -35,7 +35,7 @@ public class EmployeeDAO {
 
         List<EmployeeData> resultList = new ArrayList<>();
         try {
-            Class.forName("DRIVER_NAME");
+            Class.forName(DRIVER_NAME);
 
             con = DriverManager.getConnection(URL);
 
