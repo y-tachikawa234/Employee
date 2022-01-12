@@ -6,11 +6,11 @@ body{
 }
 
 .all{
-	background: #D4ECEA;
-	text-align: center;
-	width: 1000px;
-	padding: 70px;
-	margin: auto auto;
+  background: #D4ECEA;
+  text-align: center;
+  width: 1000px;
+  padding: 70px;
+  margin: auto auto;
 }
 
 .error {
@@ -21,7 +21,7 @@ body{
     margin: 30px auto;
 }
 
-.botun{
+.button{
   display: inline-block;
   text-decoration: none;
   background: #61C1BE;/*ボタン色*/
@@ -29,11 +29,11 @@ body{
 }
 
 .box {
-	position: relative;
-	width: 22%;
-	margin: 40px 3%;
+  position: relative;
+  width: 22%;
+  margin: 40px 3%;
 }
 
 .search{
-	padding: 60px;
+  padding: 60px;
 }

@@ -7,11 +7,11 @@ body{
 }
 
 .all{
-	background: #D4ECEA;
-	text-align: center;
-	width: 1000px;
-	padding: 70px;
-	margin: auto auto;
+  background: #D4ECEA;
+  text-align: center;
+  width: 1000px;
+  padding: 70px;
+  margin: auto auto;
 }
 
 .error {
@@ -34,8 +34,8 @@ body{
 }
 
 tr{
-	border-bottom: solid 1px #000000;
-	width: 300px !important;
+  border-bottom: solid 1px #000000;
+  width: 300px !important;
 }
 
 table tr:hover{
@@ -44,42 +44,39 @@ table tr:hover{
 
 
 th {
-	text-align:left;
+  text-align:left;
   width: 30%;
   padding: 0px 0px;
   color: #000000;
 }
 
 td{
-	text-align:left;
+  text-align:left;
   width: 100%;
 }
 
-
-
-
 .box {
-	position: relative;
-	margin: 10px;
+  position: relative;
+  margin: 10px;
 }
 
 .update{
-	padding: 5px;
-	float: left ;
+  padding: 5px;
+  
 }
 
 .delete{
-	padding: 5px;
-	float: left;
+  padding: 5px;
+  
 }
 
 .return{
-	padding: 5px;
-	float: left;
+  padding: 5px;
+  
 }
 
 .center{
-	width: 100%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   display: block;/*コレ*/
@@ -90,7 +87,7 @@ td{
     width:100%;
 }
 
-.botun{
+.button{
   display: inline-block;
   text-decoration: none;
   background: #61C1BE;/*ボタン色*/
