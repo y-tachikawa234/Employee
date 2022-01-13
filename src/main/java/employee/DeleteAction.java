@@ -15,12 +15,13 @@ public class DeleteAction extends Action {
 //			response.setContentType("text/html; charset=UTF-8");
 //			request.setCharacterEncoding("UTF-8");
             
-            final boolean delete_flag = true;
+//            final boolean delete_flag = true;
+            final boolean DELETE_FLAG = true;
             String hidden_employee_id = request.getParameter("hidden_employee_id");
             
 
             EmployeeData ed = new EmployeeData(); 
-            ed.setDelete_flag(delete_flag);
+            ed.setDelete_flag(DELETE_FLAG);
             ed.setHidden_employee_id(hidden_employee_id);
             
             EmployeeDAO dao = new EmployeeDAO(); 
