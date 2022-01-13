@@ -1,98 +1,76 @@
 package bean;
 
-public class ErrorMessage implements java.io.Serializable{
-    
+public class ErrorMessage implements java.io.Serializable {
+
     private String checkNullOfId;
     private String checkNullOfName;
     private String checkNullOfBirthday;
     private String checkFormatOfId;
     private String checkDigitOfBirthday;
-    private String checkDigitOfBase_salary;
+    private String checkDigitOfBaseSalary;
     private String checkDigitOfId;
-    private String checkNullOfEmployeedata;
+    private String checkNullOfEmployeeData;
     private String checkClass;
-    private String checkSQL;
-    
-    
+    private String checkSql;
+
     public String getCheckNullOfId() {
         return checkNullOfId;
     }
-    
     public String getCheckNullOfName() {
         return checkNullOfName;
     }
-    
     public String getCheckNullOfBirthday() {
         return checkNullOfBirthday;
     }
-    
     public String getCheckFormatOfId() {
         return checkFormatOfId;
     }
-    
     public String getCheckDigitOfBirthday() {
         return checkDigitOfBirthday;
     }
-    
-    public String getCheckDigitOfBase_salary() {
-        return checkDigitOfBase_salary;
+    public String getCheckDigitOfBaseSalary() {
+        return checkDigitOfBaseSalary;
     }
-    
     public String getCheckDigitOfId() {
         return checkDigitOfId;
     }
-    
-    public String getCheckNullOfEmployeedata() {
-        return checkNullOfEmployeedata;
+    public String getCheckNullOfEmployeeData() {
+        return checkNullOfEmployeeData;
     }
-    
     public String getCheckClass() {
         return checkClass;
     }
-    
-    public String getCheckSQL() {
-        return checkSQL;
+    public String getCheckSql() {
+        return checkSql;
     }
-
-    
     public void setCheckNullOfId(String checkNullOfId) {
-        this.checkNullOfId=checkNullOfId;
+        this.checkNullOfId = checkNullOfId;
     }
-    
     public void setCheckNullOfName(String checkNullOfName) {
-        this.checkNullOfName=checkNullOfName;
+        this.checkNullOfName = checkNullOfName;
     }
-    
     public void setCheckNullOfBirthday(String checkNullOfBirthday) {
-        this.checkNullOfBirthday=checkNullOfBirthday;
+        this.checkNullOfBirthday = checkNullOfBirthday;
     }
-    
     public void setCheckFormatOfId(String checkFormatOfId) {
-        this.checkFormatOfId=checkFormatOfId;
+        this.checkFormatOfId = checkFormatOfId;
     }
-    
     public void setCheckDigitOfBirthday(String checkDigitOfBirthday) {
-        this.checkDigitOfBirthday=checkDigitOfBirthday;
+        this.checkDigitOfBirthday = checkDigitOfBirthday;
     }
-    
-    public void setCheckDigitOfBase_salary(String checkDigitOfBase_salary) {
-        this.checkDigitOfBase_salary=checkDigitOfBase_salary;
+    public void setCheckDigitOfBaseSalary(String checkDigitOfBaseSalary) {
+        this.checkDigitOfBaseSalary = checkDigitOfBaseSalary;
     }
-    
     public void setCheckDigitOfId(String checkDigitOfId) {
-        this.checkDigitOfId=checkDigitOfId;
+        this.checkDigitOfId = checkDigitOfId;
     }
-    
-    public void setCheckNullOfEmployeedata(String checkNullOfEmployeedata) {
-        this.checkNullOfEmployeedata=checkNullOfEmployeedata;
+    public void setCheckNullOfEmployeeData(String checkNullOfEmployeeData) {
+        this.checkNullOfEmployeeData = checkNullOfEmployeeData;
     }
-    
     public void setCheckClass(String checkClass) {
-        this.checkClass=checkClass;
+        this.checkClass = checkClass;
     }
-    
-    public void setCheckSQL(String checkSQL) {
-        this.checkSQL=checkSQL;
+    public void setCheckSql(String checkSql) {
+        this.checkSql = checkSql;
     }
-
 }

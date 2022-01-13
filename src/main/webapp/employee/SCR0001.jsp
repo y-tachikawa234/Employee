@@ -8,9 +8,9 @@
 
   <div class="error">
     <p>
-      ${errormessage.checkNullOfId }<br>
-      ${errormessage.checkFormatOfId } ${errormessage.checkDigitOfId }
-      ${errormessage.checkNullOfEmployeedata }
+      ${errorMessage.checkNullOfId }<br>
+      ${errorMessage.checkFormatOfId } ${errorMessage.checkDigitOfId }
+      ${errorMessage.checkNullOfEmployeeData }
     </p>
   </div>
 
@@ -20,7 +20,7 @@
 
   <div class="search">
     <form action="Search.action" method="post">
-      社員ID<br> <input type="text" name="employee_id" class="box"><br>
+      社員ID<br> <input type="text" name="employeeId" class="box"><br>
       <input type="submit" value="社員照会・更新" class="button">
     </form>
   </div>
