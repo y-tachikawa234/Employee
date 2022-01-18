@@ -1,5 +1,8 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@include file="../header.html"%>
+<%@ page import = "java.util.List" %>
+<%@ page import ="java.util.ArrayList" %>
+
 <link rel="stylesheet" type="text/css"
   href="<%=request.getContextPath()%>/CSS/SCR0001.css">
 
@@ -8,9 +11,17 @@
 
   <div class="error">
     <p>
-      ${errorMessage.checkNullOfId }<br>
-      ${errorMessage.checkFormatOfId } ${errorMessage.checkDigitOfId }
-      ${errorMessage.checkNullOfEmployeeData }
+    <%
+    List<String> list=(List<String>)request.getAttribute("error");
+    if(list == null){
+        list =  new ArrayList<>();
+    }
+    %>
+    
+    <% for(int i=0; i<list.size(); i++){ %>
+        <%= list.get(i) %><br/>
+    <% } %>
+    
     </p>
   </div>
 

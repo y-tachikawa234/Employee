@@ -149,11 +149,12 @@ public class EmployeeDAO extends ConnectionDAO {
         return line;
     }
 
-    public int delete(EmployeeData employeeData) {
+    public String delete(EmployeeData employeeData) {
 
         Connection con = null;
         PreparedStatement st = null;
-        int line = 0;
+//        int line = 0;
+        String exceptionMessage = null;
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -163,12 +164,16 @@ public class EmployeeDAO extends ConnectionDAO {
             st = con.prepareStatement("update employee_db set delete_flag=? where employee_id=?;");
             st.setBoolean(1, employeeData.getDeleteFlag());
             st.setString(2, employeeData.getEmployeeId());
+            
+            st.executeUpdate();
 
-            line = st.executeUpdate();
+//            line = st.executeUpdate();
 
         } catch (ClassNotFoundException e) {
+            exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
             e.printStackTrace();
         } catch (SQLException e) {
+            exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,6 +186,6 @@ public class EmployeeDAO extends ConnectionDAO {
             }
         }
 
-        return line;
+        return exceptionMessage;
     }
 }

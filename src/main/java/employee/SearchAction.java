@@ -1,42 +1,56 @@
 package employee;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.EmployeeData;
-import bean.ErrorMessage;
 import dao.EmployeeDAO;
 import tool.Action;
 
 public class SearchAction extends Action {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        ErrorMessage errorMessage = new ErrorMessage();
+        
+        List<String> error = new ArrayList<>();
+        
         try {
             String employeeId = request.getParameter("employeeId");
-
-            if (employeeId.length() != 8) {
-                errorMessage.setCheckDigitOfId("社員IDは8桁で入力してください。");
-                request.setAttribute("errorMessage", errorMessage);
+            
+            if (employeeId==null || employeeId.isEmpty()) {
+                error.add("社員IDは必須です。");
+            }else if(employeeId.length() != 8) {
+                error.add("社員IDは数字8桁で入力してください。");
+            }
+            
+            if(error.size() > 0){
+                request.setAttribute("error", error);
                 return "SCR0001.jsp";
             }
-
+            
             EmployeeDAO dao = new EmployeeDAO();
             EmployeeData employeeData = dao.search(employeeId);
 
             if (employeeData.getAffiliationCd() == null) {
-                errorMessage.setCheckNullOfEmployeeData("指定した社員IDでは社員情報を照会できませんでした。");
-                request.setAttribute("errorMessage", errorMessage);
-                return "SCR0001.jsp";
-            } else {
-                request.setAttribute("employeeData", employeeData);
+                error.add("指定した社員IDでは社員情報を照会できませんでした。");
             }
-
+            
+            if(error.size() > 0){
+                request.setAttribute("error", error);
+                return "SCR0001.jsp";
+            }
+            
         } catch (NumberFormatException e) {
-            errorMessage.setCheckNullOfId("社員IDは必須です。");
-            errorMessage.setCheckFormatOfId("社員IDは数字で入力してください。");
-            request.setAttribute("errorMessage", errorMessage);
-            return "SCR0001.jsp";
+            error.add("社員IDは必須です。");
+            error.add("社員IDは数字で入力してください。");
+            
+            if(error.size() > 0){
+                request.setAttribute("error", error);
+                return "SCR0001.jsp";
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

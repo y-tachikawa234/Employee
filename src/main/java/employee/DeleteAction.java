@@ -4,12 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.EmployeeData;
+import bean.ErrorMessage;
 import dao.EmployeeDAO;
 import tool.Action;
 
 public class DeleteAction extends Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-
+        ErrorMessage errorMessage = new ErrorMessage();
         try {
             final boolean DELETE_FLAG = true;
             String employeeId = request.getParameter("employeeId");
@@ -19,11 +20,11 @@ public class DeleteAction extends Action {
             ed.setEmployeeId(employeeId);
 
             EmployeeDAO dao = new EmployeeDAO();
-            int line = dao.delete(ed);
-
-            if (line > 0) {
-                return "SCR0004.jsp";
-            }
+            String exceptionMessage = dao.delete(ed);
+            
+            errorMessage.setCheckClass(exceptionMessage);
+            request.setAttribute("errorMessage", errorMessage);
+            return "SCR0003.jsp";
 
         } catch (Exception e) {
             e.printStackTrace();
