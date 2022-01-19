@@ -17,6 +17,7 @@ public class EmployeeDAO {
     
     private Connection con = null;
     private PreparedStatement st = null;
+    String exceptionMessage = null;
 
     public EmployeeData search(String employeeId) {
         EmployeeData employeeData = new EmployeeData();
@@ -59,7 +60,6 @@ public class EmployeeDAO {
 
     public String insert(EmployeeData employeeData) {
 
-        String exceptionMessage = null;
 
         try {
             Class.forName(DRIVER_NAME);
@@ -89,15 +89,15 @@ public class EmployeeDAO {
                 con.close();
                 st.close();
             } catch (Exception e) {
+            	exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
                 e.printStackTrace();
             }
         }
         return exceptionMessage;
     }
 
-    public int update(EmployeeData employeeData) {
+    public String update(EmployeeData employeeData) {
 
-        int line = 0;
 
         try {
             Class.forName(DRIVER_NAME);
@@ -118,20 +118,22 @@ public class EmployeeDAO {
             st.setBoolean(10, employeeData.getDeleteFlag());
             st.setString(11, employeeData.getHiddenEmployeeId());
 
-            line = st.executeUpdate();
+            st.executeUpdate();
 
         } catch (ClassNotFoundException | SQLException e) {
+            exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
             e.printStackTrace();
+            return exceptionMessage;
         } finally {
             try {
                 con.close();
                 st.close();
             } catch (Exception e) {
+            	exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
                 e.printStackTrace();
             }
         }
-
-        return line;
+        return exceptionMessage;
     }
 
     public String delete(EmployeeData employeeData) {
