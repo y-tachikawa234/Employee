@@ -12,11 +12,10 @@ public class DeleteAction extends Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         ErrorMessage errorMessage = new ErrorMessage();
         try {
-            final boolean DELETE_FLAG = true;
             String employeeId = request.getParameter("employeeId");
 
             EmployeeData ed = new EmployeeData();
-            ed.setDeleteFlag(DELETE_FLAG);
+            ed.setDeleteFlag(true);
             ed.setEmployeeId(employeeId);
 
             EmployeeDAO dao = new EmployeeDAO();

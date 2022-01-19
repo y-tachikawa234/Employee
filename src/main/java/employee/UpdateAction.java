@@ -43,7 +43,7 @@ public class UpdateAction extends Action {
             }
             
             String memo = request.getParameter("memo");
-            Boolean deleteFlag = false;
+            boolean deleteFlag = false;
             String hiddenEmployeeId = request.getParameter("hiddenEmployeeId");
             
             if(error.size() > 0){

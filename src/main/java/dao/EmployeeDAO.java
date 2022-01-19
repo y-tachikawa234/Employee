@@ -8,18 +8,21 @@ import java.sql.SQLException;
 
 import bean.EmployeeData;
 
-public class EmployeeDAO extends ConnectionDAO {
+public class EmployeeDAO {
+    
+    private static final String DRIVER_NAME = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
     private static final String URL = "jdbc:sqlserver://localhost\\MSSQLSERVER;"
             + "databaseName=Employee;integratedSecurity=true;" + "encrypt=true;trustServerCertificate=true";
+    
+    private Connection con = null;
+    private PreparedStatement st = null;
 
     public EmployeeData search(String employeeId) {
         EmployeeData employeeData = new EmployeeData();
-        Connection con = null;
-        PreparedStatement st = null;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(DRIVER_NAME);
 
             con = DriverManager.getConnection(URL);
 
@@ -40,11 +43,7 @@ public class EmployeeDAO extends ConnectionDAO {
                 employeeData.setDeleteFlag(rs.getBoolean("Delete_flag"));
             }
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -60,12 +59,10 @@ public class EmployeeDAO extends ConnectionDAO {
 
     public String insert(EmployeeData employeeData) {
 
-        Connection con = null;
-        PreparedStatement st = null;
         String exceptionMessage = null;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(DRIVER_NAME);
 
             con = DriverManager.getConnection(URL);
 
@@ -83,16 +80,10 @@ public class EmployeeDAO extends ConnectionDAO {
 
             st.executeUpdate();
 
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
             e.printStackTrace();
             return exceptionMessage;
-        } catch (SQLException e) {
-            exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
-            e.printStackTrace();
-            return exceptionMessage;
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             try {
                 con.close();
@@ -106,12 +97,10 @@ public class EmployeeDAO extends ConnectionDAO {
 
     public int update(EmployeeData employeeData) {
 
-        Connection con = null;
-        PreparedStatement st = null;
         int line = 0;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(DRIVER_NAME);
 
             con = DriverManager.getConnection(URL);
 
@@ -131,11 +120,7 @@ public class EmployeeDAO extends ConnectionDAO {
 
             line = st.executeUpdate();
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -151,13 +136,10 @@ public class EmployeeDAO extends ConnectionDAO {
 
     public String delete(EmployeeData employeeData) {
 
-        Connection con = null;
-        PreparedStatement st = null;
-//        int line = 0;
         String exceptionMessage = null;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(DRIVER_NAME);
 
             con = DriverManager.getConnection(URL);
 
@@ -167,15 +149,8 @@ public class EmployeeDAO extends ConnectionDAO {
             
             st.executeUpdate();
 
-//            line = st.executeUpdate();
-
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
-            e.printStackTrace();
-        } catch (SQLException e) {
-            exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
-            e.printStackTrace();
-        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {

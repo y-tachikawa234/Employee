@@ -1,9 +1,10 @@
 package bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-public class EmployeeData implements java.io.Serializable {
+public class EmployeeData implements Serializable {
 
     private String employeeId;
     private String affiliationCd;
@@ -15,7 +16,7 @@ public class EmployeeData implements java.io.Serializable {
     private BigDecimal baseSalary;
     private String memo;
     private String hiddenEmployeeId;
-    private Boolean deleteFlag;
+    private boolean deleteFlag;
 
     public String getEmployeeId() {
         return employeeId;
@@ -47,7 +48,7 @@ public class EmployeeData implements java.io.Serializable {
     public String getHiddenEmployeeId() {
         return hiddenEmployeeId;
     }
-    public Boolean getDeleteFlag() {
+    public boolean getDeleteFlag() {
         return deleteFlag;
     }
     public void setEmployeeId(String employeeId) {
@@ -80,7 +81,7 @@ public class EmployeeData implements java.io.Serializable {
     public void setHiddenEmployeeId(String hiddenEmployeeId) {
         this.hiddenEmployeeId = hiddenEmployeeId;
     }
-    public void setDeleteFlag(Boolean deleteFlag) {
+    public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
 }

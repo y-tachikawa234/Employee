@@ -1,6 +1,8 @@
 package bean;
 
-public class ErrorMessage implements java.io.Serializable {
+import java.io.Serializable;
+
+public class ErrorMessage implements Serializable {
 
     private String checkNullOfId;
     private String checkNullOfName;
