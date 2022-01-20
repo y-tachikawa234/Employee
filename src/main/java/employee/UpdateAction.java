@@ -26,6 +26,7 @@ public class UpdateAction extends Action {
         } else if (employeeId.length() != 8) {
             error.add("社員IDは数字8桁で入力してください。");
         }
+
         String affiliationCd = request.getParameter("affiliationCd");
         String positionCd = request.getParameter("positionCd");
         String employeeNm = request.getParameter("employeeNm");
@@ -54,15 +55,6 @@ public class UpdateAction extends Action {
 
         } catch (NumberFormatException e) {
             error.add("基本給料は必須です。");
-            error.add("基本給料は*****.**の形式で入力してください。");
-
-            if (error.size() > 0) {
-                request.setAttribute("error", error);
-                return "SCR0002.jsp";
-            }
-        }
-
-        if (String.valueOf(baseSalary).length() != 8) {
             error.add("基本給料は*****.**の形式で入力してください。");
         }
 

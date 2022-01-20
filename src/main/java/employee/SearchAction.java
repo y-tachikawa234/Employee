@@ -13,47 +13,34 @@ import tool.Action;
 public class SearchAction extends Action {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        
-        List<String> error = new ArrayList<>();
-        
-        try {
-            String employeeId = request.getParameter("employeeId");
-            
-            if (employeeId==null || employeeId.isEmpty()) {
-                error.add("社員IDは必須です。");
-            }else if(employeeId.length() != 8) {
-                error.add("社員IDは数字8桁で入力してください。");
-            }
-            
-            if(error.size() > 0){
-                request.setAttribute("error", error);
-                return "SCR0001.jsp";
-            }
-            
-            EmployeeDAO dao = new EmployeeDAO();
-            EmployeeData employeeData = dao.search(employeeId);
 
-            if (employeeData.getAffiliationCd() == null) {
-                error.add("指定した社員IDでは社員情報を照会できませんでした。");
-            }
-            
-            if(error.size() > 0){
-                request.setAttribute("error", error);
-                return "SCR0001.jsp";
-            }
-            
-        } catch (NumberFormatException e) {
+        List<String> error = new ArrayList<>();
+
+        String employeeId = request.getParameter("employeeId");
+
+        if (employeeId == null || employeeId.isEmpty()) {
             error.add("社員IDは必須です。");
-            error.add("社員IDは数字で入力してください。");
-            
-            if(error.size() > 0){
-                request.setAttribute("error", error);
-                return "SCR0001.jsp";
-            }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else if (employeeId.length() != 8) {
+            error.add("社員IDは数字8桁で入力してください。");
         }
-        return "SCR0003.jsp";
+
+        if (error.size() > 0) {
+            request.setAttribute("error", error);
+            return "SCR0001.jsp";
+        }
+
+        EmployeeDAO dao = new EmployeeDAO();
+        EmployeeData employeeData = dao.search(employeeId);
+
+        if (employeeData.getAffiliationCd() == null) {
+            error.add("指定した社員IDでは社員情報を照会できませんでした。");
+        }
+
+        if (error.size() > 0) {
+            request.setAttribute("error", error);
+            return "SCR0001.jsp";
+        }else {		
+            return "SCR0003.jsp";
+        }
     }
 }
