@@ -6,194 +6,163 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 import bean.EmployeeData;
 
-public class EmployeeDAO extends ConnectionDAO {
+public class EmployeeDAO {
+    
+    private static final String DRIVER_NAME = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
-	private static final String URL = "jdbc:sqlserver://localhost\\MSSQLSERVER;"
-			+ "databaseName=Employee;integratedSecurity=true;" + "encrypt=true;trustServerCertificate=true";
-	//社員情報照会。
-	public EmployeeData search(Integer employee_id) {
-		EmployeeData employeedata = new EmployeeData();
-		Connection con = null;
-		PreparedStatement st = null;
+    private static final String URL = "jdbc:sqlserver://localhost\\MSSQLSERVER;"
+            + "databaseName=Employee;integratedSecurity=true;" + "encrypt=true;trustServerCertificate=true";
+    
+    private Connection con = null;
+    private PreparedStatement st = null;
+    String exceptionMessage = null;
 
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    public EmployeeData search(String employeeId) {
+        EmployeeData employeeData = new EmployeeData();
 
-			con = DriverManager.getConnection(URL);
+        try {
+            Class.forName(DRIVER_NAME);
 
-			st = con.prepareStatement("select * from employee_db where employee_id=? and delete_flag='0'");
-			st.setInt(1, employee_id);
-			ResultSet rs = st.executeQuery();
+            con = DriverManager.getConnection(URL);
 
-			while (rs.next()) {
-				employeedata.setEmployee_id(rs.getInt("employee_id"));
-				employeedata.setAffiliation_cd(rs.getString("affiliation_cd"));
-				employeedata.setPosition_cd(rs.getString("position_cd"));
-				employeedata.setEmployee_nm(rs.getString("employee_nm"));
-				employeedata.setGender(rs.getString("gender"));
-				employeedata.setForeign_nationality(rs.getString("foreign_nationality"));
-				employeedata.setBirthday(rs.getString("birthday"));
-				employeedata.setBase_salary(rs.getBigDecimal("base_salary"));
-				employeedata.setMemo(rs.getString("memo"));
-				employeedata.setDelete_flag(rs.getString("delete_flag"));
-			}
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-				st.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return employeedata;
-	}
+            st = con.prepareStatement("select * from employee_db where employee_id=? and delete_flag='0'");
+            st.setString(1, employeeId);
+            ResultSet rs = st.executeQuery();
 
-	// 社員登録を行う
-	public int insert(EmployeeData employeeData) {
+            while (rs.next()) {
+                employeeData.setEmployeeId(rs.getString("employee_id"));
+                employeeData.setAffiliationCd(rs.getString("affiliation_cd"));
+                employeeData.setPositionCd(rs.getString("position_cd"));
+                employeeData.setEmployeeNm(rs.getString("employee_nm"));
+                employeeData.setGender(rs.getString("gender"));
+                employeeData.setForeignNationality(rs.getString("foreign_nationality"));
+                employeeData.setBirthday(rs.getDate("birthday"));
+                employeeData.setBaseSalary(rs.getBigDecimal("base_salary"));
+                employeeData.setMemo(rs.getString("memo"));
+                employeeData.setDeleteFlag(rs.getBoolean("Delete_flag"));
+            }
 
-		Connection con = null;
-		PreparedStatement st = null;
-		int line = 0;
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        return employeeData;
+    }
 
-			con = DriverManager.getConnection(URL);
+    public String insert(EmployeeData employeeData) {
 
-			st = con.prepareStatement("insert into employee_db values(?,?,?,?,?,?,?,?,?,?)");
-			st.setInt(1, employeeData.getEmployee_id());
-			st.setString(2, employeeData.getAffiliation_cd());
-			st.setString(3, employeeData.getPosition_cd());
-			st.setString(4, employeeData.getEmployee_nm());
-			st.setString(5, employeeData.getGender());
-			st.setString(6, employeeData.getForeign_nationality());
-			st.setString(7, employeeData.getBirthday());
-			st.setBigDecimal(8, employeeData.getBase_salary());
-			st.setString(9, employeeData.getMemo());
-			st.setString(10, "0");
-			
-			if(employeeData.getForeign_nationality()==null) {
-				st.setString(6, "0");
-			}
-			
-			line = st.executeUpdate();// アップデートを実行して行数を返す。
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch(SQLServerException e) {
-			errormessage.setCheckNullOfId("社員ID・氏名・生年月日・基本給料は必須です。");
-			errormessage.setCheckFormatOfId("社員ID・基本給料は数字で入力してください。");
-			request.setAttribute("errormessage", errormessage);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-				st.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+        try {
+            Class.forName(DRIVER_NAME);
 
-		return line;
-	}
-	
-	//情報更新を行う。
-	public int update(EmployeeData employeeData) {
+            con = DriverManager.getConnection(URL);
 
-		Connection con = null;
-		PreparedStatement st = null;
-		int line = 0;
+            st = con.prepareStatement("insert into employee_db values(?,?,?,?,?,?,?,?,?,?)");
+            st.setString(1, employeeData.getEmployeeId());
+            st.setString(2, employeeData.getAffiliationCd());
+            st.setString(3, employeeData.getPositionCd());
+            st.setString(4, employeeData.getEmployeeNm());
+            st.setString(5, employeeData.getGender());
+            st.setString(6, employeeData.getForeignNationality());
+            st.setDate(7, employeeData.getBirthday());
+            st.setBigDecimal(8, employeeData.getBaseSalary());
+            st.setString(9, employeeData.getMemo());
+            st.setString(10, "0");
 
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            st.executeUpdate();
 
-			con = DriverManager.getConnection(URL);
+        } catch (ClassNotFoundException | SQLException e) {
+            exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
+            e.printStackTrace();
+            return exceptionMessage;
+        } finally {
+            try {
+                con.close();
+                st.close();
+            } catch (Exception e) {
+            	exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
+                e.printStackTrace();
+            }
+        }
+        return exceptionMessage;
+    }
 
-			st = con.prepareStatement("update employee_db set employee_id=?, affiliation_cd=?, position_cd=?, employee_nm=?, gender=?, foreign_nationality=?, birthday=?, base_salary=?, memo=?, delete_flag=? where employee_id=?;");
-			st.setInt(1, employeeData.getEmployee_id());
-			st.setString(2, employeeData.getAffiliation_cd());
-			st.setString(3, employeeData.getPosition_cd());
-			st.setString(4, employeeData.getEmployee_nm());
-			st.setString(5, employeeData.getGender());
-			st.setString(6, employeeData.getForeign_nationality());
-			st.setString(7, employeeData.getBirthday());
-			st.setBigDecimal(8, employeeData.getBase_salary());
-			st.setString(9, employeeData.getMemo());
-			st.setString(10, employeeData.getDelete_flag());
-			st.setInt(11, employeeData.getHidden_employee_id());
-			
-			if(employeeData.getForeign_nationality()==null) {
-				st.setString(6, "0");
-			}
+    public String update(EmployeeData employeeData) {
 
-			line = st.executeUpdate();// アップデートを実行して行数を返す。
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-				st.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+        try {
+            Class.forName(DRIVER_NAME);
 
-		return line;
-	}
-	
-	//社員情報の削除を行う。
-		public int delete(EmployeeData employeeData) {
+            con = DriverManager.getConnection(URL);
 
-			Connection con = null;
-			PreparedStatement st = null;
-			int line = 0;
+            st = con.prepareStatement(
+                    "update employee_db set employee_id=?, affiliation_cd=?, position_cd=?, employee_nm=?, gender=?, foreign_nationality=?, birthday=?, base_salary=?, memo=?, delete_flag=? where employee_id=?;");
+            st.setString(1, employeeData.getEmployeeId());
+            st.setString(2, employeeData.getAffiliationCd());
+            st.setString(3, employeeData.getPositionCd());
+            st.setString(4, employeeData.getEmployeeNm());
+            st.setString(5, employeeData.getGender());
+            st.setString(6, employeeData.getForeignNationality());
+            st.setDate(7, employeeData.getBirthday());
+            st.setBigDecimal(8, employeeData.getBaseSalary());
+            st.setString(9, employeeData.getMemo());
+            st.setBoolean(10, employeeData.getDeleteFlag());
+            st.setString(11, employeeData.getHiddenEmployeeId());
 
-			try {
-				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            st.executeUpdate();
 
-				con = DriverManager.getConnection(URL);
+        } catch (ClassNotFoundException | SQLException e) {
+            exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
+            e.printStackTrace();
+            return exceptionMessage;
+        } finally {
+            try {
+                con.close();
+                st.close();
+            } catch (Exception e) {
+            	exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
+                e.printStackTrace();
+            }
+        }
+        return exceptionMessage;
+    }
 
-				st = con.prepareStatement("update employee_db set delete_flag=? where employee_id=?;");
-				st.setString(1, employeeData.getDelete_flag());
-				st.setInt(2, employeeData.getHidden_employee_id());
+    public String delete(EmployeeData employeeData) {
 
-				line = st.executeUpdate();// アップデートを実行して行数を返す。
+        String exceptionMessage = null;
 
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					con.close();
-					st.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+        try {
+            Class.forName(DRIVER_NAME);
 
-			return line;
-		}
+            con = DriverManager.getConnection(URL);
+
+            st = con.prepareStatement("update employee_db set delete_flag=? where employee_id=?;");
+            st.setBoolean(1, employeeData.getDeleteFlag());
+            st.setString(2, employeeData.getEmployeeId());
+            
+            st.executeUpdate();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return exceptionMessage;
+    }
 }

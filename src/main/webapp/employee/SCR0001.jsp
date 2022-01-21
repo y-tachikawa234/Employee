@@ -1,30 +1,41 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@include file="../header.html"%>
+<%@ page import = "java.util.List" %>
+<%@ page import ="java.util.ArrayList" %>
 
-<center>
-<h1>社員管理システム</h1>
+<link rel="stylesheet" type="text/css"
+  href="<%=request.getContextPath()%>/CSS/SCR0001.css">
 
-<%--
-<%@page errorPage="SCR0001.jsp" %>
-<p>社員IDには数値を入力してください。</p>
- --%>
+<div class="all">
+  <h1>社員管理システム</h1>
 
-<p>
-	${errormessage.checkNullOfId }<br>
-	${errormessage.checkFormatOfId }
-	${errormessage.checkDigitOfId }
-</p>
+  <div class="error">
+    <p>
+    <%
+    List<String> list=(List<String>)request.getAttribute("error");
+    if(list == null){
+        list =  new ArrayList<>();
+    }
+    %>
+    
+    <% for(int i=0; i<list.size(); i++){ %>
+        <%= list.get(i) %><br/>
+    <% } %>
+    
+    </p>
+  </div>
 
-<form action="SCR0002.jsp" method="get">
-<p><input type="submit" value="社員登録"></p>
-<br>
-</form>
+  <form action="SCR0002.jsp" method="get">
+    <input type="submit" value="社員登録" class="button"><br>
+  </form>
 
-<form action="search" method="post">
-<p>社員ID<br><input type="text" name="employee_id"></p>
+  <div class="search">
+    <form action="Search.action" method="post">
+      社員ID<br> <input type="text" name="employeeId" class="box"><br>
+      <input type="submit" value="社員照会・更新" class="button">
+    </form>
+  </div>
 
-<p><input type="submit" value="社員照会・更新"></p>
-</form>
+</div>
 
-<%@include file="../footer.html" %>
-</center>
+<%@include file="../footer.html"%>
