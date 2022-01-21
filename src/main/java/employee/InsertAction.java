@@ -79,10 +79,10 @@ public class InsertAction extends Action {
 
         EmployeeDAO dao = new EmployeeDAO();
         String exceptionMessage = dao.insert(ed);
-
+        
         if (exceptionMessage != null) {
-            errorMessage.setCheckClass(exceptionMessage);
-            request.setAttribute("errorMessage", errorMessage);
+            error.add(exceptionMessage);
+            request.setAttribute("error", error);
             return "SCR0002.jsp";
         } else {
             return "SCR0004.jsp";
